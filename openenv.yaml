@@ -1,0 +1,19 @@
+name: smartops-support-env
+version: 1.0
+description: AI environment for customer support ticket resolution
+
+observation_space:
+  type: Observation
+
+action_space:
+  type: Action
+
+tasks:
+  - name: easy_classification
+    difficulty: easy
+
+  - name: medium_response
+    difficulty: medium
+
+  - name: hard_full_resolution
+    difficulty: hard
