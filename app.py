@@ -1,17 +1,44 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
 from env.environment import SmartOpsEnv
 from env.models import Action
-from env.tasks import easy_task
 
+app = FastAPI()
 
 env = SmartOpsEnv()
 obs = env.reset()
-score = easy_task(env)
-print("Task Score:", score)
 
-print("Initial:", obs)
 
-action = Action(action_type="classify", content="delivery")
-obs, reward, done, _ = env.step(action)
+class StepInput(BaseModel):
+    action_type: str
+    content: str
 
-print("After Step:", obs)
-print("Reward:", reward)
+
+@app.post("/reset")
+def reset():
+    global obs
+    obs = env.reset()
+    return obs.dict()
+
+
+@app.post("/step")
+def step(input: StepInput):
+    global obs
+
+    action = Action(
+        action_type=input.action_type,
+        content=input.content
+    )
+
+    obs, reward, done, _ = env.step(action)
+
+    return {
+        "observation": obs.dict(),
+        "reward": reward,
+        "done": done
+    }
+
+
+@app.get("/")
+def home():
+    return {"message": "SmartOps OpenEnv API running "}
