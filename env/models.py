@@ -1,12 +1,12 @@
 from pydantic import BaseModel
-from typing import Optional, List, Literal
+from typing import  List,Literal,Optional
 
 class Observation(BaseModel):
     ticket_id: str
     user_message: str
-    category: Optional[str]
-    priority: Optional[str]
-    history: List[str]
+    category: str | None
+    priority: str | None
+    history: list
     time_elapsed: int
 
 class Action(BaseModel):

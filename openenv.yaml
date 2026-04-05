@@ -1,18 +1,15 @@
-name: smartops-agent
-description: AI agent for ticket resolution
+name: smartops-env
+description: SmartOps Ticket Resolution Environment
 
 endpoints:
-  reset: /reset
-  step: /step
+  reset:
+    path: /reset
+    method: POST
 
-observation_space:
-  ticket_id: str
-  user_message: str
-  category: str
-  priority: str
-  history: list
-  time_elapsed: int
+  step:
+    path: /step
+    method: POST
 
-action_space:
-  action_type: str
-  content: str
+  state:
+    path: /state
+    method: GET
