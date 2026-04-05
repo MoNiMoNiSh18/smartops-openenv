@@ -10,13 +10,17 @@ env = SmartOpsEnv()
 @app.post("/reset")
 def reset():
     obs = env.reset()
-    return obs.dict()
+    return {
+        "observation": obs.dict(),
+        "done": False
+    }
 
 
 @app.post("/step")
 def step(action: dict):
     act = Action(**action)
     obs, reward, done, info = env.step(act)
+
     return {
         "observation": obs.dict(),
         "reward": reward,
@@ -28,4 +32,6 @@ def step(action: dict):
 @app.get("/state")
 def state():
     obs = env.state()
-    return obs.dict()
+    return {
+        "observation": obs.dict()
+    }
