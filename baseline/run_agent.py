@@ -5,24 +5,33 @@ from env.models import Action
 def classify_ticket(text):
     text = text.lower()
 
-    if "refund" in text or "damaged" in text:
+    if "refund" in text or "damaged" in text or "poor" in text or "wrong" in text:
         return "refund"
-    if "delivery" in text or "late" in text:
-        return "delivery"
-    if "payment" in text or "charged" in text:
+
+    if "payment" in text or "charged" in text or "invoice" in text or "purchase" in text:
         return "billing"
+
     if "crash" in text or "error" in text or "bug" in text:
         return "technical"
-    if "cancel" in text or "order" in text:
-        return "general"
+
+    if "cancel" in text:
+        return "delivery"
+
+    if "delivery" in text or "late" in text or "order" in text or "where" in text:
+        return "delivery"
 
     return "general"
-
 
 def get_priority(text):
     text = text.lower()
 
-    if "urgent" in text or "immediately" in text or "asap" in text:
+    if (
+        "urgent" in text or
+        "immediately" in text or
+        "asap" in text or
+        "charged" in text or
+        "payment" in text
+    ):
         return "high"
 
     return "low"
@@ -45,10 +54,10 @@ def run():
             priority = get_priority(obs.user_message)
             action = Action(action_type="prioritize", content=priority)
 
-        elif len(obs.history) < 2:
+        elif len(obs.history) < 1:
             action = Action(
                 action_type="respond",
-                content="Your issue is being handled. Refund will be processed if applicable."
+                content="We understand your issue and refund will be processed if applicable."
             )
 
         else:
