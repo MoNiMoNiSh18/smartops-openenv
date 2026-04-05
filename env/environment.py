@@ -13,14 +13,16 @@ class SmartOpsEnv:
         self.current_ticket = random.choice(self.dataset)
         self.steps = 0
         self.history = []
+        self.category = None
+        self.priority = None
         return self.state()
 
     def state(self):
         return Observation(
             ticket_id=self.current_ticket["id"],
             user_message=self.current_ticket["message"],
-            category=None,
-            priority=None,
+            category=self.category,
+            priority=self.priority,
             history=self.history,
             time_elapsed=self.steps
         )
@@ -30,31 +32,44 @@ class SmartOpsEnv:
         done = False
 
         if action.action_type == "classify":
-            self.predicted_category = action.content
-        if action.content == self.current_ticket["true_category"]:
-            reward += 0.2
+            if self.category is None:
+                self.category = action.content
+                if action.content == self.current_ticket["true_category"]:
+                    reward += 0.3
+                else:
+                    reward -= 0.1
+            else:
+                reward -= 0.2
 
         elif action.action_type == "prioritize":
-            self.predicted_priority = action.content
-            if action.content == self.current_ticket["true_priority"]:
-                reward += 0.2
+            if self.priority is None:
+                self.priority = action.content
+                if action.content == self.current_ticket["true_priority"]:
+                    reward += 0.2
+                else:
+                    reward -= 0.1
+            else:
+                reward -= 0.2
 
         elif action.action_type == "respond":
-            if "refund" in (action.content or "").lower():
-                reward += 0.3
+            self.history.append(action.content)
+            reward += 0.1
 
         elif action.action_type == "resolve":
-            reward += 0.5
-            done = True
-        
-        reward -=0.05
+            if self.category and self.priority:
+                reward += 0.5
+                done = True
+            else:
+                reward -= 0.3
+
+        else:
+            reward -= 0.2
 
         self.steps += 1
-        if self.steps > 10:
+        reward -= 0.05
+
+        if self.steps >= 10:
             done = True
             reward -= 1.0
 
-        self.predicted_category = None
-        self.predicted_priority = None
-        self.history.append(action.action_type)
         return self.state(), reward, done, {}

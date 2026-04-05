@@ -1,14 +1,12 @@
 [
-    {
-        "id":"1",
-        "message":"I want a refund,my order is damaged",
-        "true_category":"refund",
-        "true_priority":"high"
-    },
-    {
-        "id":"2",
-        "message":"My Delivery is Late",
-        "true_category":"delivery",
-        "true_priority":"medium"
-    }
+  {"id": "1", "message": "My delivery is late", "true_category": "delivery", "true_priority": "medium"},
+  {"id": "2", "message": "I want a refund for damaged product", "true_category": "refund", "true_priority": "high"},
+  {"id": "3", "message": "I was charged twice", "true_category": "billing", "true_priority": "high"},
+  {"id": "4", "message": "App is crashing frequently", "true_category": "technical", "true_priority": "high"},
+  {"id": "5", "message": "Where is my order?", "true_category": "delivery", "true_priority": "medium"},
+  {"id": "6", "message": "Received wrong item", "true_category": "refund", "true_priority": "high"},
+  {"id": "7", "message": "Need invoice for my purchase", "true_category": "billing", "true_priority": "low"},
+  {"id": "8", "message": "Payment failed but money deducted", "true_category": "billing", "true_priority": "high"},
+  {"id": "9", "message": "Cancel my order immediately", "true_category": "delivery", "true_priority": "high"},
+  {"id": "10", "message": "Product quality is poor", "true_category": "refund", "true_priority": "medium"}
 ]
