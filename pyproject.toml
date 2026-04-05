@@ -1,0 +1,14 @@
+[project]
+name = "smartops-agent"
+version = "0.1.0"
+description = "SmartOps AI Agent for ticket resolution"
+authors = [{name = "Monish"}]
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "requests"
+]
+
+[tool.setuptools]
+packages = ["env", "baseline"]
