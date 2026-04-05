@@ -1,17 +1,17 @@
 [project]
-name = "smartops-agent"
+name = "smartops-openenv"
 version = "0.1.0"
-description = "SmartOps Ticket Resolution Agent"
-authors = [
-    { name="Monish" }
-]
 dependencies = [
     "fastapi",
     "uvicorn",
     "pydantic",
-    "openai",
-    "python-dotenv"
+    "openenv-core>=0.2.0",
+    "python-dotenv",
+    "openai"
 ]
+
+[project.scripts]
+server = "server.app:app"
 
 [build-system]
 requires = ["setuptools", "wheel"]
