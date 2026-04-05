@@ -1,14 +1,18 @@
 [project]
 name = "smartops-agent"
 version = "0.1.0"
-description = "SmartOps AI Agent for ticket resolution"
-authors = [{name = "Monish"}]
+description = "SmartOps Ticket Resolution Agent"
+authors = [
+    { name="Monish" }
+]
 dependencies = [
     "fastapi",
     "uvicorn",
     "pydantic",
-    "requests"
+    "openai",
+    "python-dotenv"
 ]
 
-[tool.setuptools]
-packages = ["env", "baseline"]
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
